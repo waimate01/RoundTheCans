@@ -16,6 +16,8 @@
     <description>Yacht Race management and participation app</description>
 
     <author email="ian@davies2.com">Ian Davies</author>
+	<platform name="ios" />
+    <platform name="android" />
 	
 	
 	<preference name="phonegap-version" value="cli-8.0.0" />
