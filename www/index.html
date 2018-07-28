@@ -9,150 +9,51 @@
   <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
   <meta http-equiv="pragma" content="no-cache">
 
-  <script src="cordova.js"></script>
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="js/w3data.js"></script>
-  
-  <link rel="stylesheet" href="css/w3.css" />
-  <link rel="stylesheet" href="css/bootstrap.min.css" />
-  <link rel="icon" href="favicon.png" />
-
   <title>RoundTheCans</title>
 
-  <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-firestore.js"></script>
-  
-  <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
-  
-  <script>
-  var config = {
-		apiKey: "AIzaSyBM_FfMEWgh78yEf-DQuPeK0E1Sd9GArHg",
-		authDomain: "roundthecans-1a.firebaseapp.com",
-		databaseURL: "https://roundthecans-1a.firebaseio.com",
-		projectId: "roundthecans-1a",
-		storageBucket: "roundthecans-1a.appspot.com",
-		messagingSenderId: "973593662601"
-	  };
-  const settings = {timestampsInSnapshots: true};
-  
-  firebase.initializeApp(config);
-  var db = firebase.firestore();
-  db.settings(settings);
-  </script>
 
 </head>
 
 
 <style>
-</style>
+ body {margin: 0}
+ iframe {width: 100vw; border:none}
+ </style>
+ 
+ 
+<body onload="reload()">
+<button onclick="reload()"> RELOAD</button>
+<button onclick="navigator.app.exitApp()"> EXIT</button>
+<button onclick="report()"> REPORT</button>
+ <br><hr>
 
-
-<body onload="BodyLoaded()" ononline="OnOffLine()" onoffline="OnOffLine()">
-<div> Round The Cans </div>
-<button onclick="test()"> Test</button> &nbsp;
-<button onclick="$('#mylog').innerHTML = ''"> Clear</button>
-<input id=SendReps type=checkbox> Send Updates </input>
-<div id="firebaseui-auth-container"></div>
-<div id=mylog> Round The Cans </div>
+<div id=MyMainDiv> Please wait ... loading application </div>
 
 <script>
-  
-var VERSION = '0.01';
-var lat=-1;
-var long = 0;
-var GPStime = 0;
 
+var isrc = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media";
+//var isrc = "http://localhost:8080/www/subindex.html";
 
-function Full_Date() {
-   var d = new Date();
-   var tim= (((d.getHours()))) + ':' + ("00"+d.getMinutes()).slice(-2) + ':' + ("00"+d.getSeconds()).slice(-2) ;
-   var dat = (1900+d.getYear()) + "-"  + ("00"+d.getMonth()).slice(-2) + "-" + ("00"+d.getDate()).slice(-2);
-   return(dat + " " + tim);
-   }
-
-var repctr = 0;   
-function Periodic_Timer () {
-	if (SendReps.checked) {
-	    repctr++;
-		db.doc("Vessels/Kirifiki/PosReps/Latest").set({ord:repctr, tod:Full_Date(), lat:lat, long:long, GPStime:GPStime}, {merge:true})
-		log(repctr+' ' + Full_Date());
-		};
+function reload() {
+    MyMainDiv.innerHTML="empty";
+	setTimeout(reload2, 500);
 	}
-
-function BodyLoaded() {
- log("started");
- document.addEventListener('deviceready', Do_Inits);
- if (!window.cordova) Do_Inits();
- }
- 
-function Do_Inits() { 
- setInterval(Periodic_Timer, 5000 );
- navigator.geolocation.watchPosition(function (p) {
-			lat= p.coords.latitude;
-			long= p.coords.longitude;
-			GPStime= p.timestamp;
-			});
- navigator.geolocation.getCurrentPosition(function (e) {
-			lat= p.coords.latitude;
-			long= p.coords.longitude;
-			GPStime= p.timestamp;
-			});
- 			
-}
-
-document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-        console.log("navigator.geolocation works well");
-    }
-
-function testlogon() {
-//logon
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
-ui.start('#firebaseui-auth-container', {
-  callbacks : {
-  signInSuccessWithAuthResult: function(authResult, redirectUrl) {log("Success")},
-  uiShown: function() {log("uishown")}
-  
-  },
-  signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-    firebase.auth.TwitterAuthProvider.PROVIDER_ID
-  ],
-  // Other config options...
-});
-}
-
-var n = 0;
-function test1() {
-// addrec
-n++;
-db.collection("Logs").add({Msg:"A test", ctr: n})
-  .then(function(ref) {log("Added ok, ref="+ref.id)})
-  .catch(function(err) {log("Error "+err)});
-}
-
-
-function test() {
-// addrec
-n++;
-db.doc("Vessels/Kirifiki/PosReps/Latest").set({ctr:n}, {merge:true})
-  .then(function(ref) {log("Added ok")})
-  .catch(function(err) {console.log(err); log("Error "+err)});
-}
-
-function OnOffLine() {
-}
-
-function log(s) {
-	mylog.innerHTML = s + "<br>" + mylog.innerHTML ;
+	
+function reload2() {
+    MyMainDiv.innerHTML = "Now really loading application";
+	setTimeout(reload3, 500);
 	}
+function reload3() {
+    MyMainDiv.innerHTML= "<iframe id=MyIframe src='" + isrc + "' allow='geolocation; microphone; camera'></iframe>";
+	}
+	
+function report() {
+	MyIframe.contentWindow.postMessage("LOG:Yeppers", "*");  
+	MyIframe.contentWindow.postMessage("LOG:"+location.href, "*");  
+	}	
+  </script>
+  
 
-
-</script>
 
 </body>
 </html>
