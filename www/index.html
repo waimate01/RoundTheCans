@@ -51,8 +51,8 @@
 
 <body onload="BodyLoaded()" ononline="OnOffLine()" onoffline="OnOffLine()">
 <div> Round The Cans </div>
-<button onclick="test()"> Test</button> &NBSP;
-<button onclick="$(mylog).innerHTML('')"> Clear</button>
+<button onclick="test()"> Test</button> &nbsp;
+<button onclick="$('#mylog').innerHTML = ''"> Clear</button>
 <input id=SendReps type=checkbox> Send Updates </input>
 <div id="firebaseui-auth-container"></div>
 <div id=mylog> Round The Cans </div>
@@ -60,7 +60,7 @@
 <script>
   
 var VERSION = '0.01';
-var lat=0;
+var lat=-1;
 var long = 0;
 var GPStime = 0;
 
@@ -94,6 +94,12 @@ function Do_Inits() {
 			long= p.coords.longitude;
 			GPStime= p.timestamp;
 			});
+ navigator.geolocation.getCurrentPosition(function (e) {
+			lat= p.coords.latitude;
+			long= p.coords.longitude;
+			GPStime= p.timestamp;
+			});
+ 			
 }
 
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -142,7 +148,7 @@ function OnOffLine() {
 }
 
 function log(s) {
-	mylog.innerHTML = mylog.innerHTML + "<br>" + s;
+	mylog.innerHTML = s + "<br>" + mylog.innerHTML ;
 	}
 
 
