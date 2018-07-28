@@ -51,7 +51,8 @@
 
 <body onload="BodyLoaded()" ononline="OnOffLine()" onoffline="OnOffLine()">
 <div> Round The Cans </div>
-<button onclick="test()"> Test</button>
+<button onclick="test()"> Test</button> &NBSP;
+<button onclick="$(mylog).innerHTML('')"> Clear</button>
 <input id=SendReps type=checkbox> Send Updates </input>
 <div id="firebaseui-auth-container"></div>
 <div id=mylog> Round The Cans </div>
@@ -66,7 +67,7 @@ var GPStime = 0;
 
 function Full_Date() {
    var d = new Date();
-   var tim= (((d.getHours()))+1) + ':' + ("00"+d.getMinutes()).slice(-2) + ':' + ("00"+d.getSeconds()).slice(-2) ;
+   var tim= (((d.getHours()))) + ':' + ("00"+d.getMinutes()).slice(-2) + ':' + ("00"+d.getSeconds()).slice(-2) ;
    var dat = (1900+d.getYear()) + "-"  + ("00"+d.getMonth()).slice(-2) + "-" + ("00"+d.getDate()).slice(-2);
    return(dat + " " + tim);
    }
@@ -82,13 +83,23 @@ function Periodic_Timer () {
 
 function BodyLoaded() {
  log("started");
- setInterval(Periodic_Timer,5000 );
+ document.addEventListener('deviceready', Do_Inits);
+ if (!window.cordova) Do_Inits();
+ }
+ 
+function Do_Inits() { 
+ setInterval(Periodic_Timer, 5000 );
  navigator.geolocation.watchPosition(function (p) {
 			lat= p.coords.latitude;
 			long= p.coords.longitude;
 			GPStime= p.timestamp;
 			});
 }
+
+document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        console.log("navigator.geolocation works well");
+    }
 
 function testlogon() {
 //logon
