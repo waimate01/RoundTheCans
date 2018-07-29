@@ -51,7 +51,7 @@ function reload3() {
 	}
 	
 // When local, location.href is file:///C:/Work/PhoneGap/RoundTheCans/www/index.html	
-// when in app, 
+// when in app, is file:///var/mobile/Containers/Data/Application ... etc
 function report() {
     if (!MyIframe) alert('No IF');
 	var CW = document.getElementById("MyIframe").contentWindow;
@@ -59,14 +59,20 @@ function report() {
     if (!CW.postMessage) alert('No PM');
 	CW.postMessage("LOG:Yeppers", "*");  
 	CW.postMessage("LOG:"+location.href, "*");  
+	CW.postMessage("BASE:"+location.href, "*");  
 	}	
+	
+	
+	
+addEventListener("message", function(event) {
+  var msg= event.data.split(":")[0];
+  var param= event.data.split(":").slice(1).join(":");
+  //if (msg=="LOG") log(param);
+  alert("PARENT GOT " + event.data)
+  });
+	
   </script>
   
-<div id=d1> d1 div
-<script id=s1>  
-  function f1() {return 1}
-  </script>
-  end d1 </div>
 
 
 </body>
