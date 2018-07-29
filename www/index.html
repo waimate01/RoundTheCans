@@ -23,7 +23,7 @@
  
 <body onload="reload()">
 <button onclick="reload()"> RELOAD</button>
-<button onclick="navigator.app.exitApp()"> EXIT</button>
+<button onclick="BeGone()"> EXIT</button>
 <button onclick="report()"> REPORT</button>
 <div id=zz></div>
  <br><hr>
@@ -34,6 +34,13 @@
 
 var isrc = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media";
 //var isrc = "http://localhost:8080/www/subindex.html";
+
+function BeGone() {
+if (!navigator) alert('No Nav');
+if (!navigator.app) alert('No App');
+navigator.app.exitApp();
+}
+
 
 function reload() {
     window.onerror = function (msg, url, line, col, err) {zz.innerHTML = msg};
@@ -68,7 +75,7 @@ addEventListener("message", function(event) {
   var msg= event.data.split(":")[0];
   var param= event.data.split(":").slice(1).join(":");
   //if (msg=="LOG") log(param);
-  alert("PARENT GOT " + event.data)
+  if (msg == "ALERT") alert("PARENT GOT " + param)
   });
 	
   </script>
