@@ -56,7 +56,7 @@ function report() {
     if (!CW) alert('No CW');
     if (!CW.postMessage) alert('No PM');
 	CW.postMessage("LOG:Yeppers", "*");  
-	MyIframe.contentWindow.postMessage("LOG:"+location.href, "*");  
+	CW("LOG:"+location.href, "*");  
 	}	
   </script>
   
