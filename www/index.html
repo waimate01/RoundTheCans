@@ -52,9 +52,10 @@ function reload3() {
 	
 function report() {
     if (!MyIframe) alert('No IF');
-    if (!MyIframe.contentWindow) alert('No CW');
-    if (!MyIframe.contentWindow.postMessage) alert('No PM');
-	MyIframe.contentWindow.postMessage("LOG:Yeppers", "*");  
+	var CW = document.getElementById("MyIframe").contentWindow;
+    if (!CW) alert('No CW');
+    if (!CW.postMessage) alert('No PM');
+	CW.postMessage("LOG:Yeppers", "*");  
 	MyIframe.contentWindow.postMessage("LOG:"+location.href, "*");  
 	}	
   </script>
