@@ -25,6 +25,7 @@
 <button onclick="reload()"> RELOAD</button>
 <button onclick="navigator.app.exitApp()"> EXIT</button>
 <button onclick="report()"> REPORT</button>
+<div id=zz></div>
  <br><hr>
 
 <div id=MyMainDiv> Please wait ... loading application </div>
@@ -35,8 +36,10 @@ var isrc = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.
 //var isrc = "http://localhost:8080/www/subindex.html";
 
 function reload() {
+    window.onerror = function (msg, url, line, col, err) {zz.innerHTML = msg};
     MyMainDiv.innerHTML="empty";
 	setTimeout(reload2, 500);
+	
 	}
 	
 function reload2() {
@@ -53,6 +56,11 @@ function report() {
 	}	
   </script>
   
+<div id=d1> d1 div
+<script id=s1>  
+  function f1() {return 1}
+  </script>
+  end d1 </div>
 
 
 </body>
