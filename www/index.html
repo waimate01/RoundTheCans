@@ -51,6 +51,9 @@ function reload3() {
 	}
 	
 function report() {
+    if (!MyIframe) alert('No IF');
+    if (!MyIframe.contentWindow) alert('No CW');
+    if (!MyIframe.contentWindow.postMessage) alert('No PM');
 	MyIframe.contentWindow.postMessage("LOG:Yeppers", "*");  
 	MyIframe.contentWindow.postMessage("LOG:"+location.href, "*");  
 	}	
