@@ -50,13 +50,15 @@ function reload3() {
     MyMainDiv.innerHTML= "<iframe id=MyIframe src='" + isrc + "' allow='geolocation; microphone; camera'></iframe>";
 	}
 	
+// When local, location.href is file:///C:/Work/PhoneGap/RoundTheCans/www/index.html	
+// when in app, 
 function report() {
     if (!MyIframe) alert('No IF');
 	var CW = document.getElementById("MyIframe").contentWindow;
     if (!CW) alert('No CW');
     if (!CW.postMessage) alert('No PM');
 	CW.postMessage("LOG:Yeppers", "*");  
-	CW("LOG:"+location.href, "*");  
+	CW.postMessage("LOG:"+location.href, "*");  
 	}	
   </script>
   
