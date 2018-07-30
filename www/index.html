@@ -8,8 +8,9 @@
   <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
   <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
   <meta http-equiv="pragma" content="no-cache">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src 'self' https://firebasestorage.googleapis.com">  
-
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline';">  
+  <xmeta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com *; style-src 'self' 'unsafe-inline' 'unsafe-eval'; media-src *; img-src 'self' data: content:; script-src * 'self' 'unsafe-inline' 'unsafe-eval';">
+  
   <title>RoundTheCans</title>
 
   <script src="cordova.js"></script>
@@ -35,7 +36,7 @@
  <div id=MyMainDiv> 
 	<div id=LoadingScreen> APP <p>IS <p>LOADING</div>
 	<iframe id=MyIframe allow='geolocation; camera'
-	src="https://google.com"
+	src="https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/empty.html?alt=media"
 	></iframe>
 	</div>
 
