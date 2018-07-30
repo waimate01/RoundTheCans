@@ -33,7 +33,7 @@
 
  <div id=MyMainDiv> 
 	<div id=LoadingScreen> APP <p>IS <p>LOADING</div>
-	<iframe id=MyIframe allow='geolocation; microphone; camera'></iframe>
+	<iframe id=MyIframe allow='geolocation; camera'></iframe>
 	</div>
 
 <script>
@@ -41,7 +41,9 @@
 
 var CW;
 var GPS;
-window.onerror = function (msg, url, line, col, err) {zz.innerHTML = msg};
+var Platform; 
+
+window.onerror = function (msg, url, line, col, err) {zz.innerHTML = msg + "<br>" + zz.innerHTML};
 
 var isrc = "http://localhost:8080/www/subindex.html";
 var isrc = "subindex.html";
@@ -89,6 +91,18 @@ function report() {
 	send("LOG", {o:"yeppers"});
 	}	
 
+
+addEventListener('deviceready', function () {
+    Platform="Debug";
+	if (device) Platform = device.platform;
+
+	if (Platform == "Android" && cordova && cordova.plugins && cordova.plugins.permissions) {
+		cordova.plugins.permissions.requestPermissions([cordova.plugins.permissions.ACCESS_COARSE_LOCATION,
+														cordova.plugins.permissions.ACCESS_FINE_LOCATION,
+														cordova.plugins.permissions.CAMERA],
+														null, null);
+		}
+	});
 	
 	
 addEventListener("message", function(event) {
@@ -98,7 +112,7 @@ addEventListener("message", function(event) {
   if (msg == "FRAMELOADED") {
 		LoadingScreen.style.display="none";	
 	    CW = document.getElementById("MyIframe").contentWindow;
-		send("BASE", {basedir: location.href.split("/").slice(0,-1).join("/") + "/"});  
+		send("ENV", {platform: Platform; basedir: location.href.split("/").slice(0,-1).join("/") + "/"});  
 		}
   if (msg == "STARTWATCH") {
 		GPS = navigator.geolocation.watchPosition(function (p) {send("GPS", p.coords)},

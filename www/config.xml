@@ -11,6 +11,10 @@
 		<activity android:configChanges="orientation|keyboardHidden" android:windowSoftInputMode="adjustPan" />
 	</edit-config>		
 
+	<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+		<string>Needs location access to provide yacht race real-time progress mapping</string>
+	</edit-config>	
+	
     <name>RoundTheCans</name>
 
     <description>Yacht Race management and participation app</description>
@@ -37,12 +41,7 @@
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
 	<preference name="SplashScreen" 			  value="splash" />
 	
-    <feature name="http://api.phonegap.com/1.0/camera"/>
-    <feature name="http://api.phonegap.com/1.0/geolocation"/>
-    <feature name="http://api.phonegap.com/1.0/media"/>
-    <feature name="http://api.phonegap.com/1.0/network"/>
-    <feature name="http://api.phonegap.com/1.0/notification"/>	
-
+	<plugin name="cordova-plugin-android-permissions" source="npm" version="0.10.0" />
     <!-- Core plugins -->
 	
     <plugin name="cordova-plugin-camera" />  
