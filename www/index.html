@@ -24,7 +24,7 @@
  </style>
  
  
-<body onload="reload()">
+<body onload="BodyLoaded()">
 <button onclick="reload()"> RELOAD</button>
 <button onclick="BeGone()"> EXIT</button>
 <button onclick="report()"> REPORT</button>
@@ -52,7 +52,6 @@ if (location.href.split("/")[4] != "Work") {
 	var isrc = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media";
 	}
 console.log("isrc=", isrc)	
-alert("at 1")
 	
 function BeGone() {
 	if (!navigator) alert('No Nav');
@@ -69,7 +68,7 @@ function reload() {
 	GPS= null;
 	MyIframe.src= "";
 	console.log("About to set timeout")
-	setTimeout(function () {console.log("Loading src"); alert("set src"); MyIframe.src= isrc}, 50);
+	setTimeout(function () {console.log("Loading src"); MyIframe.src= isrc}, 50);
 	}
 	
 	
@@ -96,15 +95,20 @@ function report() {
 	send("LOG", {o:"yeppers"});
 	}	
 
-
-addEventListener('deviceready', function () {
+function BodyLoaded() {
+	addEventListener('deviceready', deviceIsReady);
+	addEventListener("message", gotMessage);
+	if (!window.cordova) deviceIsReady();
+	}
+	
+function deviceIsReady () {
 	console.log("DeviceReady");
     Platform="Debug";
-	if (device) {
+	if (window.cordova && device) {
 			console.log("attempting to access device object")
 			Platform = device.platform;
 			}
-	console.log("platform is ", platform)
+	console.log("platform is ", Platform)
 
 	if (Platform == "Android" && cordova && cordova.plugins && cordova.plugins.permissions) {
 		cordova.plugins.permissions.requestPermissions([cordova.plugins.permissions.ACCESS_COARSE_LOCATION,
@@ -112,10 +116,11 @@ addEventListener('deviceready', function () {
 														cordova.plugins.permissions.CAMERA],
 														null, null);
 		}
-	});
+	reload();	
+	}
 	
 	
-addEventListener("message", function(event) {
+function gotMessage(event) {
 
   var dat= JSON.parse(event.data)
   var msg= dat.msg;
@@ -135,7 +140,7 @@ addEventListener("message", function(event) {
 		navigator.geolocation.clearWatch(GPS);
 		}
 
-  });
+  }
 	
   </script>
   
