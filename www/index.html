@@ -83,6 +83,9 @@ function send (msg, obj) {
 	
 	
 function report() {
+		LoadingScreen.style.display="none";	
+	    CW = document.getElementById("MyIframe").contentWindow;
+
 	send("LOG", {o:"yeppers"});
 	}	
 
