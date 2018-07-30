@@ -17,7 +17,7 @@
 
 <style>
  body {margin: 0}
- iframe {width: 100vw; border:none; 100vh}
+ iframe {width: 100vw; border:none; height:100vh}
  </style>
  
  
@@ -32,8 +32,13 @@
 
 <script>
 
-var isrc = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media";
-//var isrc = "http://localhost:8080/www/subindex.html";
+var isrc = "http://localhost:8080/www/subindex.html";
+var isrc = "subindex.html";
+
+if (location.href.split("/")[4] != "Work") {
+	// running on device, fetch subindex from bucket
+	var isrc = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media";
+	}
 
 function BeGone() {
 if (!navigator) alert('No Nav');
@@ -46,13 +51,13 @@ function reload() {
     window.onerror = function (msg, url, line, col, err) {zz.innerHTML = msg};
     MyMainDiv.innerHTML="empty";
 	setTimeout(reload2, 500);
-	
 	}
 	
 function reload2() {
     MyMainDiv.innerHTML = "Now really loading application";
 	setTimeout(reload3, 500);
 	}
+	
 function reload3() {
     MyMainDiv.innerHTML= "<iframe id=MyIframe src='" + isrc + "' allow='geolocation; microphone; camera'></iframe>";
 	}
@@ -60,13 +65,7 @@ function reload3() {
 // When local, location.href is file:///C:/Work/PhoneGap/RoundTheCans/www/index.html	
 // when in app, is file:///var/mobile/Containers/Data/Application ... etc
 function report() {
-    if (!MyIframe) alert('No IF');
-	var CW = document.getElementById("MyIframe").contentWindow;
-    if (!CW) alert('No CW');
-    if (!CW.postMessage) alert('No PM');
 	CW.postMessage("LOG:Yeppers", "*");  
-	CW.postMessage("LOG:"+location.href, "*");  
-	CW.postMessage("BASE:"+location.href, "*");  
 	}	
 	
 	
@@ -76,6 +75,12 @@ addEventListener("message", function(event) {
   var param= event.data.split(":").slice(1).join(":");
   //if (msg=="LOG") log(param);
   if (msg == "ALERT") alert("PARENT GOT " + param)
+  if (msg == "READY") {
+		console.log("parent received ready")
+	    CW = document.getElementById("MyIframe").contentWindow;
+		CW.postMessage("BASE:"+location.href, "*");  
+		}
+
   });
 	
   </script>
