@@ -122,7 +122,7 @@ addEventListener("message", function(event) {
   if (msg == "FRAMELOADED") {
 		LoadingScreen.style.display="none";	
 	    CW = document.getElementById("MyIframe").contentWindow;
-		send("ENV", {platform: Platform; basedir: location.href.split("/").slice(0,-1).join("/") + "/"});  
+		send("ENV", {platform: Platform, basedir: location.href.split("/").slice(0,-1).join("/") + "/"});  
 		}
   if (msg == "STARTWATCH") {
 		console.log("Start watch")
