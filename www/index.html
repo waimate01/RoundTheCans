@@ -11,6 +11,7 @@
 
   <title>RoundTheCans</title>
 
+  <script src="cordova.js"></script>
 
 </head>
 
@@ -48,6 +49,7 @@ navigator.app.exitApp();
 
 
 function reload() {
+	zz.innerHTML = ""
     window.onerror = function (msg, url, line, col, err) {zz.innerHTML = msg};
     MyMainDiv.innerHTML="empty";
 	setTimeout(reload2, 500);
@@ -67,6 +69,13 @@ function reload3() {
 function report() {
 	CW.postMessage("LOG:Yeppers", "*");  
 	}	
+	
+document.addEventListener('deviceready', function () {
+		zz.innerHTML = "Parent deviceready"
+		if (CW) {
+			CW.postMessage("DEVICEREADY:", "*");  
+			}
+		});
 	
 	
 	
