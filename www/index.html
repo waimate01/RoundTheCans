@@ -52,6 +52,7 @@ if (location.href.split("/")[4] != "Work") {
 	var isrc = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media";
 	}
 console.log("isrc=", isrc)	
+alert("at 1")
 	
 function BeGone() {
 	if (!navigator) alert('No Nav');
@@ -68,7 +69,7 @@ function reload() {
 	GPS= null;
 	MyIframe.src= "";
 	console.log("About to set timeout")
-	setTimeout(function () {console.log("Loading src"); MyIframe.src= isrc}, 50);
+	setTimeout(function () {console.log("Loading src"); alert("set src"); MyIframe.src= isrc}, 50);
 	}
 	
 	
