@@ -8,6 +8,7 @@
   <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
   <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
   <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; frame-src 'self' https://firebasestorage.googleapis.com">  
 
   <title>RoundTheCans</title>
 
@@ -33,7 +34,9 @@
 
  <div id=MyMainDiv> 
 	<div id=LoadingScreen> APP <p>IS <p>LOADING</div>
-	<iframe id=MyIframe allow='geolocation; camera'></iframe>
+	<iframe id=MyIframe allow='geolocation; camera'
+	src="https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media"
+	></iframe>
 	</div>
 
 <script>
