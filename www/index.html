@@ -43,7 +43,7 @@ var CW;
 var GPS;
 var Platform; 
 
-window.onerror = function (msg, url, line, col, err) {zz.innerHTML = msg + "<br>" + zz.innerHTML};
+//window.onerror = function (msg, url, line, col, err) {console.log("error line ", line," " + msg); zz.innerHTML = msg + "<br>" + zz.innerHTML};
 
 var isrc = "http://localhost:8080/www/subindex.html";
 var isrc = "subindex.html";
@@ -51,7 +51,7 @@ if (location.href.split("/")[4] != "Work") {
 	// running on device, fetch subindex from bucket
 	var isrc = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media";
 	}
-	
+console.log("isrc=", isrc)	
 	
 function BeGone() {
 	if (!navigator) alert('No Nav');
@@ -61,12 +61,14 @@ function BeGone() {
 
 
 function reload() {
+	console.log("doing reload");
 	zz.innerHTML = ""
     LoadingScreen.style.display="block";	
 	if (GPS) navigator.geolocation.clearWatch(GPS);
 	GPS= null;
 	MyIframe.src= "";
-	setTimeout(function () {MyIframe.src= isrc}, 50);
+	console.log("About to set timeout")
+	setTimeout(function () {console.log("Loading src"); MyIframe.src= isrc}, 50);
 	}
 	
 	
@@ -78,8 +80,10 @@ function cloneAsObject(obj) {
 }	
 	
 function send (msg, obj) {
+	console.log("request for parent to send "+msg);
     if (!obj) obj = {};
 	obj.msg = msg;
+	console.log("CW=", CW, " deets=", JSON.stringify(cloneAsObject(obj)))
 	if (CW) CW.postMessage(JSON.stringify(cloneAsObject(obj)), "*");
 	}	
 	
@@ -93,8 +97,13 @@ function report() {
 
 
 addEventListener('deviceready', function () {
+	console.log("DeviceReady");
     Platform="Debug";
-	if (device) Platform = device.platform;
+	if (device) {
+			console.log("attempting to access device object")
+			Platform = device.platform;
+			}
+	console.log("platform is ", platform)
 
 	if (Platform == "Android" && cordova && cordova.plugins && cordova.plugins.permissions) {
 		cordova.plugins.permissions.requestPermissions([cordova.plugins.permissions.ACCESS_COARSE_LOCATION,
@@ -115,6 +124,7 @@ addEventListener("message", function(event) {
 		send("ENV", {platform: Platform; basedir: location.href.split("/").slice(0,-1).join("/") + "/"});  
 		}
   if (msg == "STARTWATCH") {
+		console.log("Start watch")
 		GPS = navigator.geolocation.watchPosition(function (p) {send("GPS", p.coords)},
 											null,
 											{enableHighAccuracy: true}
