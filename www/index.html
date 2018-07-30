@@ -18,7 +18,7 @@
 
 <style>
  body {margin: 0}
- #MyIframe {width: 100vw; border:none; height:100vh;  position:absolute; top:0}
+ #MyIframe {width: 100vw; ZZborder:none; height:100vh;  ZZposition:absolute; ZZtop:0}
  #MyMainDiv {position:relative}
  #LoadingScreen {font-size:200%; text-align:center; position:absolute; top:0}
  </style>
@@ -38,7 +38,7 @@
 
 <script>
 
-
+var FORCEREMOTE = true;
 var CW;
 var GPS;
 var Platform; 
@@ -47,7 +47,7 @@ var Platform;
 
 var isrc = "http://localhost:8080/www/subindex.html";
 var isrc = "subindex.html";
-if (location.href.split("/")[4] != "Work") {
+if (FORCEREMOTE || location.href.split("/")[4] != "Work") {
 	// running on device, fetch subindex from bucket
 	var isrc = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media";
 	}
@@ -104,7 +104,7 @@ function BodyLoaded() {
 function deviceIsReady () {
 	console.log("DeviceReady");
     Platform="Debug";
-	if (window.cordova && device) {
+	if (!!window.cordova && device) {
 			console.log("attempting to access device object")
 			Platform = device.platform;
 			}

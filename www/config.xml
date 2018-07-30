@@ -75,9 +75,13 @@
 	
 
     <gap:config-file platform="ios" parent="CFBundleShortVersionString">
-    <string>100</string>
+		<string>100</string>
     </gap:config-file>
 
+	<feature name="IntentAndNavigationFilter">
+		<param name="ios-package" value="CDVIntentAndNavigationFilter"/>
+		<param name="onload" value="true"/>
+	</feature>	
 
     <access origin="*" />
     <!-- Added the following intents to support the removal of whitelist code from base cordova to a plugin -->
