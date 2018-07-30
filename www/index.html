@@ -69,9 +69,9 @@ function reload() {
     LoadingScreen.style.display="block";	
 	if (GPS) navigator.geolocation.clearWatch(GPS);
 	GPS= null;
-	MyIframe.src= "";
+	document.getElementById("MyIframe").src="";
 	console.log("About to set timeout")
-	setTimeout(function () {console.log("Loading src"); MyIframe.src= isrc}, 50);
+	setTimeout(function () {console.log("Loading src"); document.getElementById("MyIframe").src= isrc}, 50);
 	}
 	
 	
@@ -105,7 +105,7 @@ function BodyLoaded() {
 	}
 	
 function deviceIsReady () {
-	console.log("DeviceReady");
+	alert("DeviceReady");
     Platform="Debug";
 	if (!!window.cordova && device) {
 			console.log("attempting to access device object")
