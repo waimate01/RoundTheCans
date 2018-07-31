@@ -8,7 +8,7 @@
   <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
   <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
   <meta http-equiv="pragma" content="no-cache">
-  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data:*  gap: gap://*;">  
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval' data:*  gap: gap://*">  
   
   <title>RoundTheCans</title>
 
@@ -99,7 +99,6 @@ function report() {
 	}	
 
 function BodyLoaded() {
-	alert("body loaded")
 	addEventListener('deviceready', deviceIsReady);
 	addEventListener("message", gotMessage);
 	if (!window.cordova) deviceIsReady();
