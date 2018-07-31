@@ -35,7 +35,7 @@
  <div id=MyMainDiv> 
 	<div id=LoadingScreen> APP <p>IS <p>LOADING</div>
 	<iframe id=MyIframe allow='geolocation; camera'
-	src="https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/empty.html?alt=media"
+	xxsrc="https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/empty.html?alt=media"
 	></iframe>
 	</div>
 
@@ -54,7 +54,6 @@ if (FORCEREMOTE || location.href.split("/")[4] != "Work") {
 	// running on device, fetch subindex from bucket
 	var isrc = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media";
 	}
-console.log("isrc=", isrc)	
 	
 function BeGone() {
 	if (!navigator) alert('No Nav');
@@ -98,7 +97,7 @@ function report() {
 	send("LOG", {o:"yeppers"});
 	}	
 
-addEventListener('deviceready', deviceIsReady);
+document.addEventListener('deviceready', deviceIsReady);
 
 function BodyLoaded() {
 	addEventListener('deviceready', deviceIsReady);
@@ -107,7 +106,6 @@ function BodyLoaded() {
 	}
 	
 function deviceIsReady () {
-	alert("DeviceReady");
     Platform="Debug";
 	if (!!window.cordova && device) {
 			console.log("attempting to access device object")
@@ -121,6 +119,7 @@ function deviceIsReady () {
 														cordova.plugins.permissions.CAMERA],
 														null, null);
 		}
+	alert("DeviceReady");
 	reload();	
 	}
 	
