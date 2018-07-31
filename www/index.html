@@ -41,7 +41,7 @@
 
 <script>
 
-var FORCEREMOTE = true;
+var FORCEREMOTE = false;
 var CW;
 var GPS;
 var Platform; 
@@ -69,8 +69,7 @@ function reload() {
 	if (GPS) navigator.geolocation.clearWatch(GPS);
 	GPS= null;
 	document.getElementById("MyIframe").src="";
-	console.log("About to set timeout")
-	setTimeout(function () {console.log("Loading src"); document.getElementById("MyIframe").src= isrc}, 50);
+	setTimeout(function () {document.getElementById("MyIframe").src= isrc}, 50);
 	}
 	
 	
@@ -79,7 +78,7 @@ function cloneAsObject(obj) {
     var temp = (obj instanceof Array) ? [] : {};
     for (var key in obj) { temp[key] = cloneAsObject(obj[key]); }
     return temp;
-}	
+	}	
 	
 function send (msg, obj) {
 	console.log("request for parent to send "+msg);
@@ -100,7 +99,7 @@ function report() {
 document.addEventListener('deviceready', deviceIsReady);
 
 function BodyLoaded() {
-	addEventListener('deviceready', deviceIsReady);
+	//addEventListener('deviceready', deviceIsReady);
 	addEventListener("message", gotMessage);
 	if (!window.cordova) deviceIsReady();
 	}
@@ -111,7 +110,6 @@ function deviceIsReady () {
 			console.log("attempting to access device object")
 			Platform = device.platform;
 			}
-	console.log("platform is ", Platform)
 
 	if (Platform == "Android" && cordova && cordova.plugins && cordova.plugins.permissions) {
 		cordova.plugins.permissions.requestPermissions([cordova.plugins.permissions.ACCESS_COARSE_LOCATION,
@@ -119,7 +117,6 @@ function deviceIsReady () {
 														cordova.plugins.permissions.CAMERA],
 														null, null);
 		}
-	alert("DeviceReady");
 	reload();	
 	}
 	
@@ -142,6 +139,10 @@ function gotMessage(event) {
 		}
   if (msg == "ENDWATCH") {
 		navigator.geolocation.clearWatch(GPS);
+		}
+		
+  if (msg == "CONSOLE") {
+		console.log(dat);
 		}
 
   }
