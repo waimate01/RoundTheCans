@@ -98,6 +98,8 @@ function report() {
 	send("LOG", {o:"yeppers"});
 	}	
 
+addEventListener('deviceready', deviceIsReady);
+
 function BodyLoaded() {
 	addEventListener('deviceready', deviceIsReady);
 	addEventListener("message", gotMessage);
