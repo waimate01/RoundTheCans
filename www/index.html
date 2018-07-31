@@ -81,17 +81,15 @@ function cloneAsObject(obj) {
 	}	
 	
 function send (msg, obj) {
-	console.log("request for parent to send "+msg);
     if (!obj) obj = {};
 	obj.msg = msg;
-	console.log("CW=", CW, " deets=", JSON.stringify(cloneAsObject(obj)))
 	if (CW) CW.postMessage(JSON.stringify(cloneAsObject(obj)), "*");
 	}	
 	
 	
 function report() {
-		LoadingScreen.style.display="none";	
-	    CW = document.getElementById("MyIframe").contentWindow;
+	LoadingScreen.style.display="none";	
+	CW = document.getElementById("MyIframe").contentWindow;
 
 	send("LOG", {o:"yeppers"});
 	}	
@@ -106,10 +104,7 @@ function BodyLoaded() {
 	
 function deviceIsReady () {
     Platform="Debug";
-	if (!!window.cordova && device) {
-			console.log("attempting to access device object")
-			Platform = device.platform;
-			}
+	if (!!window.cordova && device) {Platform = device.platform;}
 
 	if (Platform == "Android" && cordova && cordova.plugins && cordova.plugins.permissions) {
 		cordova.plugins.permissions.requestPermissions([cordova.plugins.permissions.ACCESS_COARSE_LOCATION,
@@ -142,7 +137,7 @@ function gotMessage(event) {
 		}
 		
   if (msg == "CONSOLE") {
-		console.log(dat);
+		console.log("Frame-> " + dat.o, dat);
 		}
 
   }
