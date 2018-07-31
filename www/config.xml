@@ -40,8 +40,6 @@
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
 	<preference name="SplashScreen" 			  value="splash" />
 	
-	<plugin name="cordova-plugin-android-permissions" source="npm" version="0.10.0" />
-    <!-- Core plugins -->
 	
     <plugin name="cordova-plugin-camera" />  
     <plugin name="cordova-plugin-device" />
@@ -50,6 +48,8 @@
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-vibration" />
     <plugin name="cordova-plugin-statusbar" />
+	<plugin name="cordova-plugin-whitelist" />
+	<plugin name="cordova-plugin-android-permissions" source="npm" version="0.10.0" />
 	
 	
 
@@ -84,9 +84,6 @@
 	</feature>	
 
     <access origin="*" />
-    <!-- Added the following intents to support the removal of whitelist code from base cordova to a plugin -->
-    <!-- Whitelist configuration. Refer to https://cordova.apache.org/docs/en/edge/guide_appdev_whitelist_index.md.html -->
-	<plugin name="cordova-plugin-whitelist" version="1" />
 	<allow-navigation href="*" />
 	<allow-intent href="*" />
 
