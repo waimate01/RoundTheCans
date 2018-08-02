@@ -34,14 +34,12 @@
 
  <div id=MyMainDiv> 
 	<div id=LoadingScreen> APP <p>IS <p>LOADING</div>
-	<iframe id=MyIframe allow='geolocation; camera'
-	xxsrc="https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/empty.html?alt=media"
-	></iframe>
+	<iframe id=MyIframe allow='geolocation; camera' XXsrc="subindex.html"></iframe>
 	</div>
 
 <script>
 
-var FORCEREMOTE = true;
+var FORCEREMOTE = false;
 var CW;
 var GPS;
 var Platform; 
@@ -68,19 +66,24 @@ function reload() {
     LoadingScreen.style.display="block";	
 	if (GPS) navigator.geolocation.clearWatch(GPS);
 	GPS= null;
-	document.getElementById("MyIframe").src="";
-	document.getElementById("MyIframe").srcdoc="";
-	//setTimeout(function () {document.getElementById("MyIframe").src= isrc}, 50);
- var xmlhttp = new XMLHttpRequest();
- xmlhttp.onreadystatechange = function() {
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			LoadingScreen.style.display="none";	
+	
+	if (isrc.substr(0,4) == "http") {
+		document.getElementById("MyIframe").srcdoc="";
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					LoadingScreen.style.display="none";	
 
-        document.getElementById("MyIframe").srcdoc = (xmlhttp.responseText);
-     }
-  }
-  xmlhttp.open("GET", isrc, true);
-  xmlhttp.send();
+				document.getElementById("MyIframe").srcdoc = (xmlhttp.responseText);
+			 }
+		  }
+		  xmlhttp.open("GET", isrc, true);
+		  xmlhttp.send();
+		}
+	else {	
+		document.getElementById("MyIframe").src="";
+		setTimeout(function () {document.getElementById("MyIframe").src= isrc}, 50);
+		}
   
 	}
 	
@@ -157,9 +160,6 @@ function gotMessage(event) {
 		console.log("Frame-> " + dat.o, dat);
 		}
 		
-  if (msg == "GET") {
-		Getter(dat.url, dat.tag);
-		}
 
   }
 	
