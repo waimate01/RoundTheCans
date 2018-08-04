@@ -34,12 +34,12 @@
 
  <div id=MyMainDiv> 
 	<div id=LoadingScreen> APP <p>IS <p>LOADING</div>
-	<iframe id=MyIframe allow='geolocation; camera' XXsrc="subindex.html"></iframe>
+	<iframe id=MyIframe allow='geolocation; camera' src="subindex.html"></iframe>
 	</div>
 
 <script>
 
-var FORCEREMOTE = false;
+var FORCEREMOTE = false;;
 var CW;
 var GPS;
 var Platform; 
@@ -67,21 +67,28 @@ function reload() {
 	if (GPS) navigator.geolocation.clearWatch(GPS);
 	GPS= null;
 	
+	el=document.createElement("IFRAME");
+	el.allow= "geolocation; camera";
+	MyMainDiv.removeChild(MyMainDiv.querySelector("#MyIframe"));
+	el.id="MyIframe";
+	MyMainDiv.appendChild(el);
+	
 	if (isrc.substr(0,4) == "http") {
-		document.getElementById("MyIframe").srcdoc="";
-		var xmlhttp = new XMLHttpRequest();
+		/*var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					LoadingScreen.style.display="none";	
-
 				document.getElementById("MyIframe").srcdoc = (xmlhttp.responseText);
 			 }
 		  }
 		  xmlhttp.open("GET", isrc, true);
-		  xmlhttp.send();
+		  xmlhttp.send(); */
+		fetch(isrc)
+			.then(function(r){
+				return r.text()})
+			.then(function(t) {document.getElementById("MyIframe").srcdoc = t;}); 
 		}
+		
 	else {	
-		document.getElementById("MyIframe").src="";
 		setTimeout(function () {document.getElementById("MyIframe").src= isrc}, 50);
 		}
   
@@ -103,16 +110,13 @@ function send (msg, obj) {
 	
 	
 function report() {
-	LoadingScreen.style.display="none";	
-	CW = document.getElementById("MyIframe").contentWindow;
-
 	send("LOG", {o:"yeppers"});
 	}	
 
+	
 document.addEventListener('deviceready', deviceIsReady);
 
 function BodyLoaded() {
-	//addEventListener('deviceready', deviceIsReady);
 	addEventListener("message", gotMessage);
 	if (!window.cordova) deviceIsReady();
 	}
@@ -127,7 +131,9 @@ function deviceIsReady () {
 														cordova.plugins.permissions.CAMERA],
 														null, null);
 		}
-	reload();	
+		
+		
+	//reload();	
 	}
 	
   
@@ -144,16 +150,8 @@ function gotMessage(event) {
 					 baseDir: location.href.split("/").slice(0,-1).join("/") + "/",
 					 appDir: (!!window.cordova) ? cordova.file.applicationDirectory : ""
 					 });  
-		}
-  if (msg == "STARTWATCH") {
-		console.log("Start watch")
-		GPS = navigator.geolocation.watchPosition(function (p) {send("GPS", p.coords)},
-											null,
-											{enableHighAccuracy: true}
-											);
-		}
-  if (msg == "ENDWATCH") {
-		navigator.geolocation.clearWatch(GPS);
+		GPS = navigator.geolocation.getCurrentPosition(function (p) {console.log('got',p);send("GPS", p.coords)});
+		GPS = navigator.geolocation.watchPosition(function (p) {console.log('watched',p);send("GPS", p.coords)}, null, {enableHighAccuracy: true} );
 		}
 		
   if (msg == "CONSOLE") {
