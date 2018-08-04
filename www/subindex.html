@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  
+ <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-auth.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-firestore.js"></script>
+ <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+ <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css" />
+
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>  
+ <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>   
+   
+  
+  <script>
+  var config = {
+		apiKey: "AIzaSyBM_FfMEWgh78yEf-DQuPeK0E1Sd9GArHg",
+		authDomain: "roundthecans-1a.firebaseapp.com",
+		databaseURL: "https://roundthecans-1a.firebaseio.com",
+		projectId: "roundthecans-1a",
+		storageBucket: "roundthecans-1a.appspot.com",
+		messagingSenderId: "973593662601"
+	  };
+  const settings = {timestampsInSnapshots: true};
+  
+  firebase.initializeApp(config);
+  var db = firebase.firestore();
+  db.settings(settings);
+  </script>
+
+</head>
+
+<style>
+#mapid { height: 380px; }
+#MyMapHolder {position:relative}
+#NoFix {size:22px; color:white; background-color:red; padding: 1em;}
+</style>
+
+
+<body onload="BodyLoaded()" ononline="OnOffLine()" onoffline="OnOffLine()">
+<div> Round The Cans </div>
+<button onclick="test()"> Test</button> &nbsp;
+<button onclick="$('#mylog').innerHTML = ''"> Clear</button>
+<input id=SendReps type=checkbox> Send Updates </input>
+<div id="firebaseui-auth-container"></div>
+<div id=mylog> Round The Cans </div>
+<div id=NoFix>NO FIX</div>
+<div id=MyMapHolder>
+  <div id="mapid"></div>
+  </div>
+
+<script>
+  
+var VERSION = '0.01';
+var fix = {latitude:0, longitude:0, heading:0, speed:0};
+var first_fix = true;
+
+var mymap;
+var markers = new Array();
+
+var env = {};
+	
+function cloneAsObject(obj) {
+    if (obj === null || !(obj instanceof Object)) { return obj; }
+    var temp = (obj instanceof Array) ? [] : {};
+    for (var key in obj) { temp[key] = cloneAsObject(obj[key]); }
+    return temp;
+}	
+	
+function send (msg, obj) {
+    if (!obj) obj = {};
+	obj.msg = msg;
+	parent.postMessage(JSON.stringify(cloneAsObject(obj)), "*");
+	}	
+
+
+function Update_My_Position	() {
+	console.log('ump ff=', first_fix," mm=", !!mymap," ", fix)
+	if (first_fix && mymap) {
+		mymap.setView([fix.latitude, fix.longitude], 15 )
+		}
+	first_fix = false;
+	$("#NoFix").hide();
+	}
+
+function test() {
+	mymap = L.map('mapid').setView([0,0], 1);
+	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mymap);
+	
+//	mymap.addLayer(markers["myId"] = L.marker([33.8215, 151.207], {"icon": icon}));
+	myIcon = L.icon({iconUrl: 'CurrentLocation.png', iconSize: [32, 32]});
+
+	mymap.addLayer(markers["myId"] = L.marker([-33.8215, 151.207],{icon: myIcon}));
+	console.log("map created, ff=", first_fix)
+	if (!first_fix) {
+			first_fix = true;
+			Update_My_Position();
+			}
+	rc=0;
+	setInterval(function(){
+	    rc=rc+0.0001;
+		markers["myId"].setLatLng([-33.8215+rc, 151.207+rc]);
+		},1000);
+	// addrec
+/*n++;
+db.doc("Vessels/Kirifiki/PosReps/Latest").set({ctr:n}, {merge:true})
+  .then(function(ref) {log("Added ok")})
+  .catch(function(err) {console.log(err); log("Error "+err)}); */
+}
+
+
+	
+function BodyLoaded() {
+ log("Frame loaded");
+ addEventListener("message", gotMessage);
+ send("FRAMELOADED");
+ Do_Inits();
+ }
+ 
+
+function Full_Date() {
+   var d = new Date();
+   var tim= (((d.getHours()))) + ':' + ("00"+d.getMinutes()).slice(-2) + ':' + ("00"+d.getSeconds()).slice(-2) ;
+   var dat = (1900+d.getYear()) + "-"  + ("00"+d.getMonth()).slice(-2) + "-" + ("00"+d.getDate()).slice(-2);
+   return(dat + " " + tim);
+   }
+
+var repctr = 0;   
+function Periodic_Timer () {
+	if (SendReps.checked) {
+	    repctr++;
+		db.doc("Vessels/Kirifiki/PosReps/Latest").set({ord:repctr, tod:Full_Date(), lat:fix.latitude, long:fix.longitude}, {merge:true})
+		log(repctr+' ' + Full_Date()+ " " + fix.latitude);
+		};
+	}
+
+function Do_Inits() { 
+ log("Do_Inits")
+ send("CONSOLE", {o:"Frame do_inits"})
+ setInterval(Periodic_Timer, 5000 );
+ window.onerror = function (msg, url, line, col, err) {
+		log("Err line " + line + " " + msg)
+		send("CONSOLE",{o:"Error line " + line + " " +msg})
+		};
+ 			
+}
+
+
+
+function OnOffLine() {
+	log("Online: "+ navigator.onLine)
+	}
+
+function log(s) {
+	console.log("log: " + s)
+	mylog.innerHTML = s + "<br>" + mylog.innerHTML ;
+	}
+
+	
+function gotMessage (event) {
+  var dat= JSON.parse(event.data)
+  var msg= dat.msg;
+  if (msg=="LOG") log(dat);
+  if (msg=="GOT") log(dat);
+  if (msg=="ENV") {
+					env = dat;
+					console.log("env=", env);
+						
+					log("BASE "+ dat.baseDir)
+					log("APP "+ dat.appDir)
+					log("PLAT "+ dat.platform)
+					}
+  if (msg=="GPS") {fix = dat; Update_My_Position() }
+  }
+  
+	
+	
+	
+function testlogon() {
+//logon
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+ui.start('#firebaseui-auth-container', {
+  callbacks : {
+  signInSuccessWithAuthResult: function(authResult, redirectUrl) {log("Success")},
+  uiShown: function() {log("uishown")}
+  
+  },
+  signInOptions: [
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    firebase.auth.TwitterAuthProvider.PROVIDER_ID
+  ],
+  // Other config options...
+});
+}
+
+var n = 0;
+function test1() {
+// addrec
+n++;
+db.collection("Logs").add({Msg:"A test", ctr: n})
+  .then(function(ref) {log("Added ok, ref="+ref.id)})
+  .catch(function(err) {log("Error "+err)});
+}
+
+
+
+</script>
+
+
+  
+
+
+</body>
+</html>
