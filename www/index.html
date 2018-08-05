@@ -8,7 +8,7 @@
   <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
   <meta http-equiv="expires" content="Sat, 31 Oct 2014 00:00:00 GMT">
   <meta http-equiv="pragma" content="no-cache">
-  <meta http-equiv="Content-Security-Policy" content="default-src * gap://ready 'unsafe-inline' 'unsafe-eval' data:*  file: gap: gap://* ">  
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' data: gap://ready data:* 'unsafe-inline' 'unsafe-eval' file: gap: gap://* ">  
   
   <title>RoundTheCans</title>
 
@@ -38,7 +38,7 @@
 
 <script>
 
-var FORCEREMOTE = false;;
+var FORCEREMOTE = true;;
 var CW;
 var GPS;
 var Platform; 
@@ -76,14 +76,6 @@ function reload() {
 	MyMainDiv.appendChild(el);
 	
 	if (isrc.substr(0,4) == "http") {
-		/*var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				document.getElementById("MyIframe").srcdoc = (xmlhttp.responseText);
-			 }
-		  }
-		  xmlhttp.open("GET", isrc, true);
-		  xmlhttp.send(); */
 		fetch(isrc)
 			.then(function(r){
 				return r.text()})
@@ -93,7 +85,6 @@ function reload() {
 	else {	
 		setTimeout(function () {document.getElementById("MyIframe").src= isrc}, 50);
 		}
-  
 	}
 	
 	
