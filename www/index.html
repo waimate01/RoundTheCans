@@ -27,6 +27,7 @@
  
 <body onload="BodyLoaded()">
 <button onclick="reload()"> RELOAD</button>
+<label><input id=LoadLocal type=checkbox style="transform:scale(1.7)"> LOCAL </label> &nbsp;
 <button onclick="BeGone()"> EXIT</button>
 <button onclick="test()"> TEST</button>
  <br>
@@ -38,7 +39,6 @@
 
 <script>
 
-var FORCEREMOTE = true;;
 var CW;
 var GPS;
 var Platform; 
@@ -46,10 +46,12 @@ var Platform;
 //window.onerror = function (msg, url, line, col, err) {console.log("error line ", line," " + msg); zz.innerHTML = msg + "<br>" + zz.innerHTML};
 
 var isrc = "http://localhost:8080/www/subindex.html";
-var isrc = "subindex.html";
-if (FORCEREMOTE || location.href.split("/")[4] != "Work") {
-	// running on device, fetch subindex from bucket
-	var isrc = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media";
+var isrc_L = "subindex.html";
+var isrc_R = "https://firebasestorage.googleapis.com/v0/b/roundthecans-1a.appspot.com/o/subindex.html?alt=media";
+
+isrc = isrc_L;
+if (location.href.split("/")[4] == "Work") {
+	LoadLocal.checked = true;
 	}
 	
 function BeGone() {
@@ -65,6 +67,7 @@ function test() {
 	
 
 function reload() {
+	isrc = (LoadLocal.checked) ? isrc_L : isrc_R;
     LoadingScreen.style.display="block";	
 	if (GPS) navigator.geolocation.clearWatch(GPS);
 	GPS= null;
