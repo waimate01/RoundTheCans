@@ -126,6 +126,12 @@ function deviceIsReady () {
 														null, null);
 		}
 		
+
+	if (!!window.cordova) {
+		window.BackgroundTimer.onTimerEvent(function () {send("TICK")});
+		window.BackgroundTimer.start(nil, nil, {timerInterval:5000});
+		}
+	else setInterval(function () {send("TICK")}, 5000)	;
 		
 	reload();	
 	}
