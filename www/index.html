@@ -62,6 +62,9 @@ function BeGone() {
 
 	
 function test() {
+	window.BackgroundTimer.onTimerEvent(function () {console.log("tick"); send("TICK")});
+	window.BackgroundTimer.start(ok, bad, {timerInterval:5000});
+
 	send("LOG", {o:"yeppers"});
 	}	
 	
@@ -128,8 +131,6 @@ function deviceIsReady () {
 		
 
 	if (!!window.cordova) {
-		window.BackgroundTimer.onTimerEvent(function () {console.log("tick"); send("TICK")});
-		window.BackgroundTimer.start(ok, bad, {timerInterval:5000});
 		}
 	else setInterval(function () {send("TICK")}, 5000)	;
 		
