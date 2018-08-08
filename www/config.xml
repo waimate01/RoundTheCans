@@ -50,11 +50,15 @@
     <plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin-whitelist" />
 	<plugin name="cordova-plugin-file" />
-	<plugin name="cordova-background-timer" source="npm" />
 	<plugin name="cordova-plugin-android-permissions" source="npm" version="0.10.0" />
 	
 	
-
+	<plugin name="cordova-plugin-mauron85-background-geolocation">
+	  <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11+" />
+	  <variable name="ANDROID_SUPPORT_LIBRARY_VERSION" value="23+" />
+	  <variable name="ALWAYS_USAGE_DESCRIPTION" value="App requires background tracking enabled" />
+	  <variable name="MOTION_USAGE_DESCRIPTION" value="App requires motion detection" />
+	</plugin>
 	
 	<platform name="android" >	
 		<icon platform="android" qualifier="ldpi" src="res/icons/android/icon-36-ldpi.png"/>

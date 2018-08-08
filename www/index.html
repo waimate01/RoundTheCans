@@ -62,10 +62,28 @@ function BeGone() {
 
 	
 function test() {
-	window.BackgroundTimer.onTimerEvent(function () {console.log("tick"); send("TICK")});
-	window.BackgroundTimer.start(ok, bad, {timerInterval:5000});
 
 	send("LOG", {o:"yeppers"});
+	BackgroundGeolocation.configure({
+		locationProvider: BackgroundGeolocation.RAW_PROVIDER,
+		desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
+		stationaryRadius: 20,
+		distanceFilter: 10,
+		notificationTitle: 'Background tracking',
+		notificationText: 'enabled',
+		debug: true,
+		fastestInterval: 5000,
+		activitiesInterval: 10000
+		});	
+
+
+	BackgroundGeolocation.on('location', function(location) {
+		console.log("LOC", location)
+
+		Send("GPS", cloneAsObject(location));
+  		});
+  	  
+	
 	}	
 	
 
@@ -130,15 +148,9 @@ function deviceIsReady () {
 		}
 		
 
-	if (!!window.cordova) {
-		}
-	else setInterval(function () {send("TICK")}, 5000)	;
-		
 	reload();	
 	}
 	
-function ok() {console.log("Timer started")}	
-function bad(e) {console.log("Timer Failed"); console.log(e)}	
 	
 	
 function gotMessage(event) {
