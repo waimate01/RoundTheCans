@@ -81,7 +81,7 @@ function test() {
 	BackgroundGeolocation.on('location', function(location) {
 		console.log("LOC", location)
 
-		Send("GPS", cloneAsObject(location));
+		send("GPS", cloneAsObject(location));
   		});
   	  
   BackgroundGeolocation.on('error', function(error) {
