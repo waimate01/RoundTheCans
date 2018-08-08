@@ -169,8 +169,8 @@ function gotMessage(event) {
 					 baseDir: location.href.split("/").slice(0,-1).join("/") + "/",
 					 appDir: (!!window.cordova) ? cordova.file.applicationDirectory : ""
 					 });  
-		GPS = navigator.geolocation.getCurrentPosition(function (p) {console.log('got',p);send("GPS", p.coords)});
-		GPS = navigator.geolocation.watchPosition(function (p) {console.log('watched',p);send("GPS", p.coords)}, null, {enableHighAccuracy: true} );
+		//GPS = navigator.geolocation.getCurrentPosition(function (p) {console.log('got',p);send("GPS", p.coords)});
+		//GPS = navigator.geolocation.watchPosition(function (p) {console.log('watched',p);send("GPS", p.coords)}, null, {enableHighAccuracy: true} );
 		}
 		
   if (msg == "CONSOLE") {
