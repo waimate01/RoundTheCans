@@ -64,6 +64,7 @@ function BeGone() {
 function test() {
 
 	send("LOG", {o:"yeppers"});
+	console.log("Requesting")
 	BackgroundGeolocation.configure({
 		locationProvider: BackgroundGeolocation.RAW_PROVIDER,
 		desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
@@ -71,7 +72,7 @@ function test() {
 		distanceFilter: 10,
 		notificationTitle: 'Background tracking',
 		notificationText: 'enabled',
-		debug: true,
+		//debug: true,
 		fastestInterval: 5000,
 		activitiesInterval: 10000
 		});	
@@ -83,7 +84,30 @@ function test() {
 		Send("GPS", cloneAsObject(location));
   		});
   	  
-	
+  BackgroundGeolocation.on('error', function(error) {
+    console.log('[ERROR] BackgroundGeolocation error:', error.code, error.message);
+  });
+
+  BackgroundGeolocation.on('start', function() {
+    console.log('[INFO] BackgroundGeolocation service has been started');
+  });
+
+  BackgroundGeolocation.on('stop', function() {
+    console.log('[INFO] BackgroundGeolocation service has been stopped');
+  });
+	  
+BackgroundGeolocation.on('background', function() {
+    console.log('[INFO] App is in background');
+    // you can also reconfigure service (changes will be applied immediately)
+    BackgroundGeolocation.configure({ debug: true });
+  });
+
+  BackgroundGeolocation.on('foreground', function() {
+    console.log('[INFO] App is in foreground');
+    BackgroundGeolocation.configure({ debug: false });
+  });
+
+BackgroundGeolocation.start();  
 	}	
 	
 
@@ -139,7 +163,7 @@ function BodyLoaded() {
 	}
 	
 function deviceIsReady () {
-
+    console.log("Devready");
 	if (device.platform == "Android" && cordova && cordova.plugins && cordova.plugins.permissions) {
 		cordova.plugins.permissions.requestPermissions([cordova.plugins.permissions.ACCESS_COARSE_LOCATION,
 														cordova.plugins.permissions.ACCESS_FINE_LOCATION,
@@ -158,6 +182,7 @@ function gotMessage(event) {
   var dat= JSON.parse(event.data)
   var msg= dat.msg;
   if (msg == "FRAMELOADED") {
+		console.log("Frame ready")
 		LoadingScreen.style.display="none";	
 	    CW = document.getElementById("MyIframe").contentWindow;
 		send("ENV", {platform: device.platform, 
