@@ -128,13 +128,16 @@ function deviceIsReady () {
 		
 
 	if (!!window.cordova) {
-		window.BackgroundTimer.onTimerEvent(function () {send("TICK")});
-		window.BackgroundTimer.start(nil, nil, {timerInterval:5000});
+		window.BackgroundTimer.onTimerEvent(function () {console.log("tick"); send("TICK")});
+		window.BackgroundTimer.start(ok, bad, {timerInterval:5000});
 		}
 	else setInterval(function () {send("TICK")}, 5000)	;
 		
 	reload();	
 	}
+	
+function ok() {console.log("Timer started")}	
+function bad(e) {console.log("Timer Failed"); console.log(e)}	
 	
 	
 function gotMessage(event) {
