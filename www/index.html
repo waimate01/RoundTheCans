@@ -37,11 +37,11 @@
 	<iframe id=MyIframe allow='geolocation; camera' XXsrc="subindex.html"></iframe>
 	</div>
 
+<script src="token.js"></script>	
 <script>
 
 var CW;
 var GPS;
-var Platform; 
 
 //window.onerror = function (msg, url, line, col, err) {console.log("error line ", line," " + msg); zz.innerHTML = msg + "<br>" + zz.innerHTML};
 
@@ -111,14 +111,15 @@ document.addEventListener('deviceready', deviceIsReady);
 
 function BodyLoaded() {
 	addEventListener("message", gotMessage);
-	if (!window.cordova) deviceIsReady();
+	if (!window.cordova) {
+		device= {platform:"Debug"};
+		deviceIsReady();
+		}
 	}
 	
 function deviceIsReady () {
-    Platform="Debug";
-	if (!!window.cordova && device) {Platform = device.platform;}
 
-	if (Platform == "Android" && cordova && cordova.plugins && cordova.plugins.permissions) {
+	if (device.platform == "Android" && cordova && cordova.plugins && cordova.plugins.permissions) {
 		cordova.plugins.permissions.requestPermissions([cordova.plugins.permissions.ACCESS_COARSE_LOCATION,
 														cordova.plugins.permissions.ACCESS_FINE_LOCATION,
 														cordova.plugins.permissions.CAMERA],
@@ -129,8 +130,6 @@ function deviceIsReady () {
 	reload();	
 	}
 	
-  
-	
 	
 function gotMessage(event) {
 
@@ -139,7 +138,12 @@ function gotMessage(event) {
   if (msg == "FRAMELOADED") {
 		LoadingScreen.style.display="none";	
 	    CW = document.getElementById("MyIframe").contentWindow;
-		send("ENV", {platform: Platform, 
+		send("ENV", {platform: device.platform, 
+					 MyKey: MyKey,
+					 uuid: device.uuid,
+					 model: device.model,
+					 manufacturer: device.manufacturer,
+					 serial: device.serial,
 					 baseDir: location.href.split("/").slice(0,-1).join("/") + "/",
 					 appDir: (!!window.cordova) ? cordova.file.applicationDirectory : ""
 					 });  
