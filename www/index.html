@@ -79,7 +79,7 @@ function StartGPS () {
 		}
 
 	BackgroundGeolocation.configure({
-		locationProvider: BackgroundGeolocation.RAW_PROVIDER,
+		locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
 		desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
 		stationaryRadius: 10,
 		distanceFilter: 10,
