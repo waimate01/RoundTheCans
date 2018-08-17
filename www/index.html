@@ -80,14 +80,14 @@ function StartGPS () {
 
 	BackgroundGeolocation.configure({
 		locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
-		desiredAccuracy: BackgroundGeolocation.LOW_ACCURACY,
+		desiredAccuracy: BackgroundGeolocation.MEDIUM_ACCURACY,
 		stationaryRadius: 10,
 		distanceFilter: 10,
 		startForeground: false,
 		stopOnTerminate: true,
 		notificationTitle: 'Background position reporting',
 		notificationText: 'enabled',
-		debug: false,
+		debug: true,                         //********************
 		interval: 10000,
 		fastestInterval: 5000,
 		activitiesInterval: 10000
@@ -99,9 +99,42 @@ function StartGPS () {
 			});
 		  
 		  
-	BackgroundGeolocation.on('background', function() {background = true;});
+	BackgroundGeolocation.on('background', function() {
+			send("LOG", {o:"[BACKGROUND]"});
+			background = true;
+			});
 
-	BackgroundGeolocation.on('foreground', function() {background = false;});
+	BackgroundGeolocation.on('foreground', function() {
+			send("LOG", {o:"[FOREGROUND]"});
+			background = false;
+			});
+	
+	
+	BackgroundGeolocation.on('error', function(error) {
+		send("LOG", {o:"[ERROR] " + error.code + " " + error.message});
+		});
+
+	BackgroundGeolocation.on('start', function() {
+		send("LOG", {o:"[START]"});
+	  });
+
+	BackgroundGeolocation.on('stop', function() {
+		send("LOG", {o:"[STOP]"});
+	  });
+
+	BackgroundGeolocation.on('authorization', function(status) {
+		send("LOG", {o:"[AUTH]"});
+		if (status !== BackgroundGeolocation.AUTHORIZED) {
+		  // we need to set delay or otherwise alert may not be shown
+		  setTimeout(function() {
+			var showSettings = confirm('App requires location tracking permission. Would you like to open app settings?');
+			if (showSetting) {
+			  return BackgroundGeolocation.showAppSettings();
+			}
+		  }, 1000);
+		}
+	  });
+
 		
 	BackgroundGeolocation.start();  
 	}	
