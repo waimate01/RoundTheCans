@@ -80,7 +80,7 @@ function StartGPS () {
 
 	BackgroundGeolocation.configure({
 		locationProvider: BackgroundGeolocation.DISTANCE_FILTER_PROVIDER,
-		desiredAccuracy: BackgroundGeolocation.HIGH_ACCURACY,
+		desiredAccuracy: BackgroundGeolocation.LOW_ACCURACY,
 		stationaryRadius: 10,
 		distanceFilter: 10,
 		startForeground: false,
