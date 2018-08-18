@@ -94,7 +94,7 @@ function StartGPS () {
 		});	
 		
 	BackgroundGeolocation.on('location', function(location) {
-			location.background = background;
+			location.mode = (background) ? "bg" : "fg";
 			send("GPS", cloneAsObject(location));
 			});
 		  
@@ -137,6 +137,13 @@ function StartGPS () {
 
 		
 	BackgroundGeolocation.start();  
+	
+	if (device.platform == "Android") {
+		navigator.geolocation.watchPosition(function (location) {
+				location.mode = "wp";
+				send("GPS", cloneAsObject(location));
+				}, nil, {enableHighAccuracy:true});
+		}
 	}	
 
 	
@@ -164,8 +171,7 @@ function reload() {
 	
 	if (isrc.substr(0,4) == "http") {
 		fetch(isrc)
-			.then(function(r){
-				return r.text()})
+			.then(function(r) {return r.text()})
 			.then(function(t) {document.getElementById("MyIframe").srcdoc = t;}); 
 		}
 		
