@@ -139,10 +139,17 @@ function StartGPS () {
 	BackgroundGeolocation.start();  
 	
 	if (device.platform == "Android") {
-		navigator.geolocation.watchPosition(function (location) {
+		send("LOG", {o:"[WatchPos]"});
+		navigator.geolocation.watchPosition(
+			function (location) {
 				location.mode = "wp";
 				send("GPS", cloneAsObject(location));
-				}, nil, {enableHighAccuracy:true});
+				}, 
+			function (e) {
+				send("LOG", "WatchError");
+				send("LOG", JSON.stringify(e));
+				},
+			{enableHighAccuracy:true});
 		}
 	}	
 
