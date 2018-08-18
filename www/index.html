@@ -141,9 +141,10 @@ function StartGPS () {
 	if (device.platform == "Android") {
 		send("LOG", {o:"[WatchPos]"});
 		navigator.geolocation.watchPosition(
-			function (location) {
-				location.mode = "wp";
-				send("GPS", cloneAsObject(location));
+			function (p) {
+				p = cloneAsObject(p.coords);
+				p.mode = "wp";
+				send("GPS", p);
 				}, 
 			function (e) {
 				send("LOG", "WatchError");
