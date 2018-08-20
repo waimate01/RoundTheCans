@@ -138,7 +138,7 @@ function StartGPS () {
 		
 	BackgroundGeolocation.start();  
 	
-	if (device.platform == "Android") {
+	if (device.platform != "ZZAndroid") {
 		send("LOG", {o:"[WatchPos]"});
 		navigator.geolocation.watchPosition(
 			function (p) {
