@@ -95,6 +95,7 @@ function StartGPS () {
 		
 	BackgroundGeolocation.on('location', function(location) {
 			location.mode = (background) ? "bg" : "fg";
+			location.MyTime = (new Date()).getTime();
 			send("GPS", cloneAsObject(location));
 			});
 		  
@@ -144,6 +145,7 @@ function StartGPS () {
 			function (p) {
 				p = cloneAsObject(p.coords);
 				p.mode = "wp";
+				p.MyTime = (new Date()).getTime();
 				send("GPS", p);
 				}, 
 			function (e) {
