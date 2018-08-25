@@ -289,7 +289,7 @@ var config = {
 
 function Do_Logon () {
     var p = 'google';
-	console.log(hello.getAuthResponse(p)); // current state
+	console.log('about to init')
 	hello.init({
                 google : '973593662601-nqnt7ak9b62d15t13inkiqlq3khqejg6.apps.googleusercontent.com',
                 facebook : '238895966823295'
@@ -300,6 +300,8 @@ function Do_Logon () {
                 // It could even be localhost, e.g. http://localhost/somepath as phonegap is not run from a domain so SameOrigin breaks, instead we take advantage of being able to read the popups URL in PhoneGap
                 redirect_uri : 'https://davies2.com/oauth.html'
             });
+   console.log('after init')
+   console.log(hello.getAuthResponse(p)); // current state
    hello(p).login().then(function(r) {
                     console.log(r);
 					hello(p).api('/me').then(function (resp) {console.log(resp)})  //resp.id is me !
