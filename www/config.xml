@@ -54,7 +54,7 @@
 	<plugin name="cordova-universal-links-plugin"  />	
 	<plugin name="cordova-plugin-buildinfo"  />	
 	<plugin name="cordova-plugin-browsertab"  />	
-	<plugin name="cordova-plugin-customurlscheme "  />	
+	<plugin name="cordova-plugin-customurlscheme"  URL_SCHEME=com.firebase.cordova />	
 	<plugin name="cordova-plugin-android-permissions" source="npm" version="0.10.0" />
 	
 	<universal-links>
