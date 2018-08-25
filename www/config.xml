@@ -50,6 +50,7 @@
     <plugin name="cordova-plugin-statusbar" />
 	<plugin name="cordova-plugin-whitelist" />
 	<plugin name="cordova-plugin-file" />
+	<plugin name="cordova-plugin-inappbrowser"  />	
 	<plugin name="cordova-plugin-android-permissions" source="npm" version="0.10.0" />
 	
 	
