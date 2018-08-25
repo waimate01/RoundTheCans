@@ -13,6 +13,15 @@
   <title>RoundTheCans</title>
 
   <script src="cordova.js"></script>
+  
+   
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
+  
+  <script src="https://cdn.firebase.com/libs/firebaseui/3.4.0/firebaseui.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.0/firebaseui.css" />
+  
 
 </head>
 
@@ -32,6 +41,8 @@
 <button onclick="test()"> TEST</button>
 <button onclick="BackgroundGeolocation.showAppSettings()"> SHOW1</button>
 <button onclick="BackgroundGeolocation.showLocationSettings()"> SHOW2</button>
+<div id="firebaseui-auth-container">Logon here</div>
+
 
  <br>
 
@@ -233,7 +244,7 @@ function deviceIsReady () {
 	
 	
 function gotMessage(event) {
-
+ console.log("GOT ", event.data)
   var dat= JSON.parse(event.data)
   var msg= dat.msg;
   if (msg == "STARTGPS") StartGPS();
@@ -255,9 +266,69 @@ function gotMessage(event) {
   if (msg == "CONSOLE") {
 		console.log("Frame-> " + dat.o, dat);
 		}
+  if (msg == "LOGON") {
+		Do_Logon();
+		}
 		
 
   }
+  
+  
+  
+var config = {
+		apiKey: "AIzaSyBM_FfMEWgh78yEf-DQuPeK0E1Sd9GArHg",
+		authDomain: "roundthecans-1a.firebaseapp.com",
+		databaseURL: "https://roundthecans-1a.firebaseio.com",
+		projectId: "roundthecans-1a",
+		storageBucket: "roundthecans-1a.appspot.com",
+		messagingSenderId: "973593662601"
+	  };
+
+  
+  
+function Do_Logon() {
+firebase.initializeApp(config);
+
+var provider = new firebase.auth.FacebookAuthProvider();
+firebase.auth().signInWithPopup(provider).then(function(result) {
+  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+  console.log(result)
+  var token = result.credential.accessToken;
+  // The signed-in user info.
+  var user = result.user;
+  // ...
+}).catch(function(error) {
+  // Handle Errors here.
+  console.log(error)
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // The email of the user's account used.
+  var email = error.email;
+  // The firebase.auth.AuthCredential type that was used.
+  var credential = error.credential;
+  // ...
+});
+
+return 
+
+var ui = new firebaseui.auth.AuthUI(firebase.auth());
+ui.start('#firebaseui-auth-container', {
+  callbacks : {
+  signInWithPopup: function(authResult, redirectUrl) {console.log("Success ", authResult)},
+  //signInSuccessWithAuthResult: function(authResult, redirectUrl) {log("Success")},
+  uiShown: function() {}
+  
+  },
+  signInOptions: [
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID
+  ],
+  // Other config options...
+});
+}
+ 
+  
 	
   </script>
   
