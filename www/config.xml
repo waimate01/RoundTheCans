@@ -51,9 +51,16 @@
 	<plugin name="cordova-plugin-whitelist" />
 	<plugin name="cordova-plugin-file" />
 	<plugin name="cordova-plugin-inappbrowser"  />	
+	<plugin name="cordova-universal-links-plugin"  />	
 	<plugin name="cordova-plugin-android-permissions" source="npm" version="0.10.0" />
 	
-	
+	<universal-links>
+    <host name="RoundTheCans.page.link" scheme="https" />
+    <host name="roundthecans-1a.firebaseapp.com" scheme="https">
+        <path url="/__/auth/callback"/>
+    </host>
+	</universal-links>
+
 	<plugin name="cordova-plugin-mauron85-background-geolocation" >
 	  <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11+" />
 	  <variable name="ANDROID_SUPPORT_LIBRARY_VERSION" value="26+" />
