@@ -22,7 +22,10 @@
   <script src="https://cdn.firebase.com/libs/firebaseui/3.4.0/firebaseui.js"></script>
   <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.0/firebaseui.css" />
   
+   
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/hellojs/2.0.0-4/hello.all.js"></script> 
 
+  
 </head>
 
 
@@ -284,9 +287,27 @@ var config = {
 		messagingSenderId: "973593662601"
 	  };
 
+function Do_Logon () {
+	hello.init({
+                google : '656984324806-sr0q9vq78tlna4hvhlmcgp2bs2ut8uj8.apps.googleusercontent.com',
+                facebook : '238895966823295',
+                windows : '00000000400D8578',
+                twitter: 'eQuyZuECKWPiv3D7E4qdg',
+                instagram: 'e47d210f864c4b1ca94225ddab97205a'
+            }, {
+                //
+                // Define the OAuth2 return URL
+                // This can be anything you like, as long as its the callback associated with the your provider-app client id.
+                // It could even be localhost, e.g. http://localhost/somepath as phonegap is not run from a domain so SameOrigin breaks, instead we take advantage of being able to read the popups URL in PhoneGap
+                redirect_uri : 'https://davies2.com/oauth.html'
+            });
+   hello('facebook').login().then(function(r) {
+                    console.log(r);
+                })
+}
+	  
   
-  
-function Do_Logon() {
+function Do_Logon2() {
 firebase.initializeApp(config);
 
 var provider = new firebase.auth.FacebookAuthProvider();
