@@ -288,12 +288,11 @@ var config = {
 	  };
 
 function Do_Logon () {
+    var p = 'google';
+	console.log(hello.getAuthResponse(p)); // current state
 	hello.init({
-                google : '656984324806-sr0q9vq78tlna4hvhlmcgp2bs2ut8uj8.apps.googleusercontent.com',
-                facebook : '238895966823295',
-                windows : '00000000400D8578',
-                twitter: 'eQuyZuECKWPiv3D7E4qdg',
-                instagram: 'e47d210f864c4b1ca94225ddab97205a'
+                google : '973593662601-nqnt7ak9b62d15t13inkiqlq3khqejg6.apps.googleusercontent.com',
+                facebook : '238895966823295'
             }, {
                 //
                 // Define the OAuth2 return URL
@@ -301,8 +300,10 @@ function Do_Logon () {
                 // It could even be localhost, e.g. http://localhost/somepath as phonegap is not run from a domain so SameOrigin breaks, instead we take advantage of being able to read the popups URL in PhoneGap
                 redirect_uri : 'https://davies2.com/oauth.html'
             });
-   hello('facebook').login().then(function(r) {
+   hello(p).login().then(function(r) {
                     console.log(r);
+					hello(p).api('/me').then(function (resp) {console.log(resp)})  //resp.id is me !
+
                 })
 }
 	  
