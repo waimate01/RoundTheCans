@@ -14,18 +14,6 @@
 
   <script src="cordova.js"></script>
   
-   
-  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
-  
-  <script src="https://cdn.firebase.com/libs/firebaseui/3.4.0/firebaseui.js"></script>
-  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.4.0/firebaseui.css" />
-  
-   
- <script src="https://cdnjs.cloudflare.com/ajax/libs/hellojs/2.0.0-4/hello.all.js"></script> 
-
-  
 </head>
 
 
@@ -44,14 +32,13 @@
 <button onclick="test()"> TEST</button>
 <button onclick="BackgroundGeolocation.showAppSettings()"> SHOW1</button>
 <button onclick="BackgroundGeolocation.showLocationSettings()"> SHOW2</button>
-<div id="firebaseui-auth-container">Logon here</div>
 
 
  <br>
 
  <div id=MyMainDiv> 
 	<div id=LoadingScreen> APP <p>IS <p>LOADING</div>
-	<iframe id=MyIframe allow='geolocation; camera' XXsrc="subindex.html"></iframe>
+	<iframe id=MyIframe allow='geolocation; camera' ></iframe>
 	</div>
 
 <!--Script src="token.js"></script-->	
@@ -247,7 +234,6 @@ function deviceIsReady () {
 	
 	
 function gotMessage(event) {
- console.log("GOT ", event.data)
   var dat= JSON.parse(event.data)
   var msg= dat.msg;
   if (msg == "STARTGPS") StartGPS();
@@ -266,95 +252,11 @@ function gotMessage(event) {
 					 });  
 		}
 		
-  if (msg == "CONSOLE") {
-		console.log("Frame-> " + dat.o, dat);
-		}
-  if (msg == "LOGON") {
-		Do_Logon();
-		}
-		
-
+  if (msg == "CONSOLE") {console.log("Frame-> " + dat.o, dat);}
   }
   
   
   
-var config = {
-		apiKey: "AIzaSyBM_FfMEWgh78yEf-DQuPeK0E1Sd9GArHg",
-		authDomain: "roundthecans-1a.firebaseapp.com",
-		databaseURL: "https://roundthecans-1a.firebaseio.com",
-		projectId: "roundthecans-1a",
-		storageBucket: "roundthecans-1a.appspot.com",
-		messagingSenderId: "973593662601"
-	  };
-
-function Do_Logon_Hello () {
-// disallowed for google
-    var p = 'google';
-	console.log('about to init')
-	hello.init({
-                google : '973593662601-nqnt7ak9b62d15t13inkiqlq3khqejg6.apps.googleusercontent.com',
-                facebook : '238895966823295'
-            }, {
-                //
-                // Define the OAuth2 return URL
-                // This can be anything you like, as long as its the callback associated with the your provider-app client id.
-                // It could even be localhost, e.g. http://localhost/somepath as phonegap is not run from a domain so SameOrigin breaks, instead we take advantage of being able to read the popups URL in PhoneGap
-                redirect_uri : 'https://davies2.com/oauth.html'
-            });
-   console.log('after init')
-   console.log(hello.getAuthResponse(p)); // current state
-   hello(p).login().then(function(r) {
-                    console.log(r);
-					hello(p).api('/me').then(function (resp) {console.log(resp)})  //resp.id is me !
-
-                })
-}
-	  
-  
-function Do_Logon() {
-firebase.initializeApp(config);
-
-var provider = new firebase.auth.FacebookAuthProvider();
-firebase.auth().signInWithRedirect(provider).then(function(result) {
-  // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-  console.log(result)
-  var token = result.credential.accessToken;
-  // The signed-in user info.
-  var user = result.user;
-  // ...
-}).catch(function(error) {
-  // Handle Errors here.
-  console.log(error)
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // The email of the user's account used.
-  var email = error.email;
-  // The firebase.auth.AuthCredential type that was used.
-  var credential = error.credential;
-  // ...
-});
-
-return 
-
-var ui = new firebaseui.auth.AuthUI(firebase.auth());
-ui.start('#firebaseui-auth-container', {
-  callbacks : {
-  signInWithPopup: function(authResult, redirectUrl) {console.log("Success ", authResult)},
-  //signInSuccessWithAuthResult: function(authResult, redirectUrl) {log("Success")},
-  uiShown: function() {}
-  
-  },
-  signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID,
-    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-    firebase.auth.FacebookAuthProvider.PROVIDER_ID
-  ],
-  // Other config options...
-});
-}
- 
-  
-	
   </script>
   
 
