@@ -287,7 +287,8 @@ var config = {
 		messagingSenderId: "973593662601"
 	  };
 
-function Do_Logon () {
+function Do_Logon_Hello () {
+// disallowed for google
     var p = 'google';
 	console.log('about to init')
 	hello.init({
@@ -310,11 +311,11 @@ function Do_Logon () {
 }
 	  
   
-function Do_Logon2() {
+function Do_Logon() {
 firebase.initializeApp(config);
 
 var provider = new firebase.auth.FacebookAuthProvider();
-firebase.auth().signInWithPopup(provider).then(function(result) {
+firebase.auth().signInWithRedirect(provider).then(function(result) {
   // This gives you a Facebook Access Token. You can use it to access the Facebook API.
   console.log(result)
   var token = result.credential.accessToken;
