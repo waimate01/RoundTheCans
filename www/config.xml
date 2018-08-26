@@ -15,6 +15,10 @@
 		<string>Needs location access to provide yacht race real-time progress mapping</string>
 	</edit-config>	
 	
+	<edit-config target="NSLocationAlwaysUsageDescription" file="*-Info.plist" mode="merge">
+		<string>Needs location access to provide yacht race real-time progress mapping</string>
+	</edit-config>	
+	
     <name>RoundTheCans</name>
 
     <description>Yacht Race management and participation app</description>
