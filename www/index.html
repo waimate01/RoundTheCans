@@ -26,15 +26,15 @@
  
  
 <body onload="BodyLoaded()">
-<button onclick="reload()"> RELOAD</button>
-<label><input id=LoadLocal type=checkbox style="transform:scale(1.7)"> LOCAL </label> &nbsp;
-<button onclick="BeGone()"> EXIT</button>
-<button onclick="test()"> TEST</button>
-<button onclick="BackgroundGeolocation.showAppSettings()"> SHOW1</button>
-<button onclick="BackgroundGeolocation.showLocationSettings()"> SHOW2</button>
-
-
- <br>
+<div id="reloadbuttons">
+	<button onclick="reload()"> RELOAD</button>
+	<label><input id=LoadLocal type=checkbox style="transform:scale(1.7)"> LOCAL </label> &nbsp;
+	<button onclick="BeGone()"> EXIT</button>
+	<!--button onclick="test()"> TEST</button>
+	<button onclick="BackgroundGeolocation.showAppSettings()"> SHOW1</button>
+	<button onclick="BackgroundGeolocation.showLocationSettings()"> SHOW2</button-->
+	<br>
+	</div>
 
  <div id=MyMainDiv> 
 	<div id=LoadingScreen> APP <p>IS <p>LOADING</div>
@@ -238,6 +238,7 @@ function gotMessage(event) {
   var msg= dat.msg;
   if (msg == "STARTGPS") StartGPS();
   if (msg == "STOPGPS") StopGPS();
+  if (msg == "HIDERELOAD") reloadbuttons.style.display = "none";
   if (msg == "FRAMELOADED") {
 		console.log("Frame ready")
 		LoadingScreen.style.display="none";	

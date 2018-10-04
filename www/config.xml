@@ -8,7 +8,7 @@
         version   = "0.0.1">
 
 	<edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/activity">
-		<activity android:configChanges="orientation|keyboardHidden" android:windowSoftInputMode="adjustPan" />
+		<activity android:configChanges="orientation|keyboardHidden|screenSize" android:windowSoftInputMode="adjustPan" />
 	</edit-config>		
 
 	<edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
