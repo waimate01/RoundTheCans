@@ -19,6 +19,14 @@
 		<string>Needs location access to provide yacht race real-time progress mapping</string>
 	</edit-config>	
 	
+	<edit-config target="UIStatusBarHidden" file="*-Info.plist" mode="overwrite" platform="ios">
+		<true/>
+	</edit-config>
+
+	<edit-config target="UIViewControllerBasedStatusBarAppearance" file="*-Info.plist" mode="overwrite" platform="ios">
+		<false/>
+	</edit-config>	
+	
     <name>RoundTheCans</name>
 
     <description>Yacht Race management and participation app</description>
