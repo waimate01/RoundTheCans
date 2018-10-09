@@ -227,7 +227,7 @@ function deviceIsReady () {
 														null, null);
 		}
 		
-	StatusBar.overlaysWebView(false);
+	if (window.StatusBar) {StatusBar.overlaysWebView(false);}
 	reload();	
 	}
 	
@@ -240,6 +240,7 @@ function gotMessage(event) {
   if (msg == "STOPGPS") StopGPS();
   if (msg == "RELOAD") reload();
   if (msg == "HIDERELOAD") reloadbuttons.style.display = "none";
+  if (msg == "STATUSBAR") StatusBar[dat.func](dat.param);
   if (msg == "FRAMELOADED") {
 		console.log("Frame ready")
 		LoadingScreen.style.display="none";	
