@@ -25,7 +25,7 @@
  </style>
  
  
-<body onload="BodyLoaded()">
+<body onload="BodyLoaded()" style="background-color:red">
 <div id="reloadbuttons">
 	<button onclick="reload()"> RELOAD</button>
 	<label><input id=LoadLocal type=checkbox style="transform:scale(1.7)"> LOCAL </label> &nbsp;
@@ -36,9 +36,9 @@
 	<br>
 	</div>
 
- <div id=MyMainDiv> 
+ <div id=MyMainDiv style="background-color:green"> 
 	<div id=LoadingScreen> APP <p>IS <p>LOADING</div>
-	<iframe id=MyIframe allow='geolocation; camera' ></iframe>
+	<iframe id=MyIframe allow='geolocation; camera' style="background-color:blue"></iframe>
 	</div>
 
 <!--Script src="token.js"></script-->	
