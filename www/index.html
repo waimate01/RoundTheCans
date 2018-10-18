@@ -230,6 +230,7 @@ function deviceIsReady () {
 		}
 		
 	if (window.StatusBar) {StatusBar.overlaysWebView(false);}
+	addEventListener("pause", () => {send("PAUSE")}, false);
 	reload();	
 	}
 	
