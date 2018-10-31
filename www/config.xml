@@ -5,7 +5,7 @@
         id        = "com.davies2.roundthecans"
 		xmlns:cdv="http://cordova.apache.org/ns/1.0"
 		xmlns:android="http://schemas.android.com/apk/res/android"
-        version   = "0.0.1">
+        version   = "0.5.0">
 
 	<edit-config file="AndroidManifest.xml" mode="merge" target="/manifest/application/activity">
 		<activity android:configChanges="orientation|keyboardHidden|screenSize" android:windowSoftInputMode="adjustPan" />
@@ -28,6 +28,14 @@
 	<platform name="ios" />
     <platform name="android" />
 	
+	<universal-links>
+		<host name="roundthecans.page.link/rniX" scheme="https" />
+		<host name="roundthecans-1a.firebaseapp.com" scheme="https">
+			<path url="/__/auth/callback"/>
+		</host>
+	</universal-links>	
+	
+	<preference name="AndroidLaunchMode" value="singleTask" />
 	
 	<preference name="phonegap-version" value="cli-8.0.0" />
 
@@ -59,8 +67,15 @@
 	<plugin name="cordova-plugin-whitelist" />
 	<plugin name="cordova-plugin-file" />
 	<plugin name="cordova-plugin-inappbrowser"  />	
+	<plugin name="cordova-plugin-buildinfo "  />	
+	<plugin name="cordova-universal-links-plugin-fix"  />	
+	<plugin name="cordova-plugin-browsertab "  />	
+	<plugin name="cordova-plugin-customurlscheme  "  />	
 	<plugin name="cordova-plugin-android-permissions" source="npm" version="0.10.0" />
 	
+	<plugin name="cordova-plugin-customurlscheme  "  >	
+	  <variable name="URL_SCHEME" value="com.firebase.cordova" />
+	</plugin>
 
 	<plugin name="cordova-plugin-mauron85-background-geolocation" >
 	  <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11+" />

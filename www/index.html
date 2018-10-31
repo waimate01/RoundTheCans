@@ -172,6 +172,7 @@ function StopGPS () {
 
 function reload() {
 	isrc = (LoadLocal.checked) ? isrc_L : isrc_R;
+	//isrc = isrc_R
     LoadingScreen.style.display="block";	
 	if (GPS) navigator.geolocation.clearWatch(GPS);
 	GPS= null;
