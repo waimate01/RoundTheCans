@@ -273,8 +273,10 @@ function gotMessage(event) {
 
 function Init_FB()	{
 		// Initialize Firebase
+		send("LOG", {o:"[Start Init]"});
+
 		var config = {
-			apiKey: "AIzaSyBM_FfMEWgh78yEf-DQuPeK0E1Sd9GArHg",
+			apiKey: "AIzaSyDrEmxFfzUIAyJeaQnuF3XsEps4m4Xbkcg",
 			authDomain: "roundthecans-1a.firebaseapp.com",
 			databaseURL: "https://roundthecans-1a.firebaseio.com",
 			projectId: "roundthecans-1a",
@@ -282,10 +284,12 @@ function Init_FB()	{
 			messagingSenderId: "973593662601"
 		  };
 		firebase.initializeApp(config);
+		send("LOG", {o:"[Done Init]"});
 		}
 
   
 function Perform_Login()	{
+	send("LOG", {o:"[Start Logon]"});
 	var provider = new firebase.auth.GoogleAuthProvider();
 	
 	firebase.auth().signInWithRedirect(provider).then(function() {
