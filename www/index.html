@@ -14,6 +14,11 @@
 
   <script src="cordova.js"></script>
   
+  <!--- FIREBASE OAUTH --->
+ 
+  <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
+
+  
 </head>
 
 
@@ -260,8 +265,48 @@ function gotMessage(event) {
 		}
 		
   if (msg == "CONSOLE") {console.log("Frame-> " + dat.o, dat);}
+  if (msg == "INITFB") Init_FB();
+  if (msg == "LOGON") Perform_Login();
+		
   }
   
+
+function Init_FB()	{
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyBM_FfMEWgh78yEf-DQuPeK0E1Sd9GArHg",
+			authDomain: "roundthecans-1a.firebaseapp.com",
+			databaseURL: "https://roundthecans-1a.firebaseio.com",
+			projectId: "roundthecans-1a",
+			storageBucket: "roundthecans-1a.appspot.com",
+			messagingSenderId: "973593662601"
+		  };
+		firebase.initializeApp(config);
+		}
+
+  
+function Perform_Login()	{
+	var provider = new firebase.auth.GoogleAuthProvider();
+	
+	firebase.auth().signInWithRedirect(provider).then(function() {
+	  return firebase.auth().getRedirectResult();
+	}).then(function(result) {
+	  // This gives you a Google Access Token.
+	  // You can use it to access the Google API.
+  	  send("LOG", {o:result});
+	  var token = result.credential.accessToken;
+	  // The signed-in user info.
+	  var user = result.user;
+	  // ...
+	}).catch(function(error) {
+  	  send("LOG", {o:error});
+	  // Handle Errors here.
+	  var errorCode = error.code;
+	  var errorMessage = error.message;
+	});
+	
+	}
+	
   
   
   </script>
