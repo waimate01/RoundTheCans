@@ -73,7 +73,7 @@
 	<plugin name="cordova-plugin-android-permissions" source="npm" version="0.10.0" />
 	
 	<plugin name="cordova-plugin-customurlscheme"  >	
-	  <variable name="URL_SCHEME" value="com.firebase.cordova" />
+	  <variable name="URL_SCHEME" value="com.davies2.roundthecans" />
 	</plugin>
 
 	<plugin name="cordova-plugin-mauron85-background-geolocation" >
