@@ -17,7 +17,7 @@
  
 <!--script src="https://cdn.auth0.com/js/auth0/9.8.1/auth0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@auth0/cordova@0.3.0/src/index.min.js"></script-->
-<script src="https://cdn.auth0.com/js/lock/11.x/lock.min.js"></script>
+<script src="https://cdn.auth0.com/js/lock/11.0/lock.min.js"></script>
   
 </head>
 
@@ -325,7 +325,7 @@ function Init_FB0()	{
 		}
 		
 function Init_FB()	{
-	var lock = new Auth0Lock('gEIiRtRR8tI1fddLlr6GwI-Faufh9U7F', 'roundthecans.au.auth0.com');
+	 lock = new Auth0Lock('gEIiRtRR8tI1fddLlr6GwI-Faufh9U7F', 'roundthecans.au.auth0.com');
 		}
 
   
@@ -342,7 +342,7 @@ function Perform_Login()	{
       // Save the JWT token.
 				send("LOG", {o:"[OK]"});
 				send("LOG", {o:token});
-				send("LOG", {o:JSON.stringify(profile));
+				send("LOG", {o:JSON.stringify(profile)});
     }
   });
 
