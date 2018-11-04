@@ -14,10 +14,10 @@
 
   <script src="cordova.js"></script>
   
-  <!--- FIREBASE OAUTH --->
  
-  <script src="https://www.gstatic.com/firebasejs/5.5.6/firebase.js"></script>
-
+<!--script src="https://cdn.auth0.com/js/auth0/9.8.1/auth0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@auth0/cordova@0.3.0/src/index.min.js"></script-->
+<script src="https://cdn.auth0.com/js/lock/11.x/lock.min.js"></script>
   
 </head>
 
@@ -275,7 +275,8 @@ catch (e) {return}
   if (msg == "INITFB") Init_FB();
   if (msg == "CHECKLOGON") Check_Logon();
   if (msg == "LOGON") Perform_Login();
-  if (msg == "LOGOUT") firebase.auth.signOut();
+  if (msg == "LOGOUT") {
+		};
 		
   }
   
@@ -296,7 +297,7 @@ firebase.auth().getRedirectResult().then(function(result) {
 });
 	}  */
 
-function Init_FB()	{
+function Init_FB0()	{
 		// Initialize Firebase
 		send("LOG", {o:"[Start Init]"});
 
@@ -322,9 +323,35 @@ function Init_FB()	{
 				// handle it
 				});
 		}
+		
+function Init_FB()	{
+	var lock = new Auth0Lock('gEIiRtRR8tI1fddLlr6GwI-Faufh9U7F', 'roundthecans.au.auth0.com');
+		}
 
   
 function Perform_Login()	{
+
+  lock.show(function(err, profile, token) {
+    if (err) {
+      // Error callback
+				send("LOG", {o:"[ERROR]"});
+				send("LOG", {o:err});
+    } else {
+      // Success calback  
+
+      // Save the JWT token.
+				send("LOG", {o:"[OK]"});
+				send("LOG", {o:token});
+				send("LOG", {o:JSON.stringify(profile));
+    }
+  });
+
+
+	}
+
+
+
+function Perform_Login_FB()	{
 	send("LOG", {o:"[Start Logon]"});
 	var provider = new firebase.auth.GoogleAuthProvider();
 	
@@ -338,6 +365,12 @@ function Perform_Login()	{
 	  var token = result.credential.accessToken;
 	  // The signed-in user info.
 	  var user = result.user;
+				send("LOG", {o:user.uid});
+				send("LOG", {o:user.photoURL});
+				send("LOG", {o:user.email});
+				send("LOG", {o:user.displayName});
+				send("LOG", {o:user.providerData[0].uid});
+				send("LOG", {o:user.getIdToken()});
 	  // ...
 	}).catch(function(error) {
 	  send("LOG", {o:"[Fail]"});
