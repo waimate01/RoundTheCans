@@ -197,6 +197,11 @@ function reload() {
 	else {	
 		setTimeout(function () {document.getElementById("MyIframe").src= isrc}, 50);
 		}
+		
+	window.onerror = function (msg, url, line, col, err) {
+		send("LOG",{o:"Error line " + line + " " +msg});
+		};
+		
 	}
 	
 	
