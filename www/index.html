@@ -329,7 +329,7 @@ function Init_FB()	{
 		}
 
   
-function Perform_Login()	{
+function Perform_Login00()	{
 
   lock.show(function(err, profile, token) {
     if (err) {
@@ -345,11 +345,32 @@ function Perform_Login()	{
 				send("LOG", {o:JSON.stringify(profile)});
     }
   });
+}
 
+function Perform_Login()	{
+	
+	
+const auth0 = new Auth0Cordova({
+  domain: "roundthecans.au.auth0.com",
+  clientId: "gEIiRtRR8tI1fddLlr6GwI-Faufh9U7F",
+  packageIdentifier: "com.davies2.roundthecans"
+});
 
-	}
+const options = {
+  scope: 'openid profile',
+};
 
-
+auth0.authorize(options, function (err, result) {
+  if (err) {
+  send("LOG", {o:"[FAIL]"});
+ send("LOG", {o:JSON.stringify(err)});
+    // failure
+  }
+  send("LOG", {o:"[SUCCESS]"});
+ send("LOG", {o:JSON.stringify(result)});
+  // success!
+});
+}
 
 function Perform_Login_FB()	{
 	send("LOG", {o:"[Start Logon]"});

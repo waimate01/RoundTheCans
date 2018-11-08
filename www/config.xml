@@ -69,11 +69,15 @@
 	<plugin name="cordova-plugin-inappbrowser"  />	
 	<plugin name="cordova-plugin-buildinfo "  />	
 	<plugin name="cordova-universal-links-plugin-fix"  />	
-	<plugin name="cordova-plugin-browsertab "  />	
+	<plugin name="cordova-plugin-browsertab"  />	
+	<plugin name="cordova-plugin-safariviewcontroller"  />	
 	<plugin name="cordova-plugin-android-permissions" source="npm" version="0.10.0" />
 	
 	<plugin name="cordova-plugin-customurlscheme"  >	
 	  <variable name="URL_SCHEME" value="com.davies2.roundthecans" />
+	  <variable name="ANDROID_SCHEME" value="com.davies2.roundthecans" />
+	  <variable name="ANDROID_HOST" value="roundthecans.au.auth0.com" />
+	  <variable name="ANDROID_PATHPREFIX" value="/cordova/com.davies2.roundthecans/callback" />
 	</plugin>
 
 	<plugin name="cordova-plugin-mauron85-background-geolocation" >
